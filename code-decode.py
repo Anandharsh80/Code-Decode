@@ -8,8 +8,8 @@
 
 
 #import Image module from Pillow(PIL)
+from tkinter import *
 from PIL import Image
-from termcolor import colored
 
 
 
@@ -135,52 +135,6 @@ def decode(pixel_list):
             return decoded_message
 
 
-# Function to run driver code
-def driverFunc():
-
-    print(colored("Welcome to CODE-DECODE","magenta"))
-    print(colored("Enter 1 to Encode message\nEnter 2 to Decode message","green"))
-
-    while(True):
-
-        var = int(input())
-        if (var == 1 or var == 2):
-            break
-        print(colored("Invalid Choice","red"))
-
-    if (var == 1):
-
-        print(colored("ENCODING","magenta"))
-
-        print(colored("Enter the Message:","green"))
-        data = input()
-
-        print(colored("Enter the Image name (with extension):","green"))
-        fileName = input()
-
-        message_chars = convertBinary(data)
-        pixel_list = getPixels(fileName)
-        pixel_list = encode(pixel_list,message_chars)
-        
-        print(colored("Enter the Encoded Image name (with extension):","green"))
-        fileName2 = input()
-
-        createImage(pixel_list, fileName, fileName2)
-        
-        print(colored("Encoded image saved","yellow"))
-
-    else :
-
-        print(colored("DECODING","magenta"))
-
-        print(colored("Enter the Encoded Image name (with extension):","green"))
-        fileName = input()
-
-        pixel_list = getPixels(fileName)
-        decoded_message = decode(pixel_list)
-
-        print(colored("The Encoded message is:","yellow"))
-        print(decoded_message)
 
 
 
@@ -188,7 +142,194 @@ def driverFunc():
 # Driver code
 if __name__ == "__main__":
 
-    driverFunc()
+
+
+    # Starting Page of Console
+    def StartPage():
+
+        frame = Frame(console)
+        frame.config(background='#000000', padx=100, pady=100)
+
+        welcome_label_text = StringVar()
+        button_enc_text = StringVar()
+        button_dec_text = StringVar()
+        welcome_label_text.set("Welcome to CODE-DECODE !!")
+        button_enc_text.set("Encode")
+        button_dec_text.set("Decode")
+
+
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=0,column=0)
+        welcome_label = Label(frame, textvariable = welcome_label_text, bg = '#000000', fg = '#FFFFFF', padx='10px', pady='10px', font=('', 30))
+        welcome_label.grid(row=1,column=0)
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=2,column=0)
+
+        button_enc = Button(frame, textvariable=button_enc_text, command= lambda: EncodePage(), padx='10px', pady='10px', font=('', 20))
+        button_enc.grid(row=3,column=0)
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=4,column=0)
+
+        button_dec = Button(frame, textvariable=button_dec_text, command= lambda: DecodePage(), padx='10px', pady='10px', font=('', 20))
+        button_dec.grid(row=5,column=0)
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=6,column=0)
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=7,column=0)
+
+        frame.grid(row=0, column=0)
+
+
+    # Encode Page of Console
+    def EncodePage():
+
+        frame = Frame(console)
+        frame.config(background='#000000', padx= 80)
+
+        welcome_label_text = StringVar()
+        message_label_text = StringVar()
+        image_file_label_text = StringVar()
+        image_save_label_text = StringVar()
+        message = StringVar()
+        og_image = StringVar()
+        encoded_image = StringVar()
+        button_enc_text = StringVar()
+        button_home_text = StringVar()
+        welcome_label_text.set("ENCODE")
+        message_label_text.set("Enter the Message to encrypt")
+        image_file_label_text.set("Enter the Image File path (with extension)")
+        image_save_label_text.set("Enter the Encoded Image File path (with extension)")
+        button_enc_text.set("Encode")
+        button_home_text.set("Back to Home")
+
+
+        welcome_label = Label(frame, textvariable = welcome_label_text, bg = '#000000', fg = '#FFFFFF', padx='10px', pady='10px', font=('', 25))
+        welcome_label.grid(row=0,column=0)
+
+        random_label = Label(frame,text='', bg = '#000000')
+        random_label.grid(row=1,column=0)
+
+        message_label = Label(frame, textvariable = message_label_text, bg = '#000000', fg = '#FFFFFF', padx='10px', pady='10px', font=('', 15))
+        message_label.grid(row=2,column=0)
+        message_entry = Entry(frame, textvariable = message, width=60)
+        message_entry.grid(row=3,column=0)
+
+        image_file_label = Label(frame, textvariable = image_file_label_text, bg = '#000000', fg = '#FFFFFF', padx='10px', pady='10px', font=('', 15))
+        image_file_label.grid(row=4,column=0)
+        image_file_entry = Entry(frame, textvariable = og_image, width=60)
+        image_file_entry.grid(row=5,column=0)
+
+        image_save_label = Label(frame, textvariable = image_save_label_text, bg = '#000000', fg = '#FFFFFF', padx='10px', pady='10px', font=('', 15))
+        image_save_label.grid(row=6,column=0)
+        image_save_entry = Entry(frame, textvariable = encoded_image, width=60)
+        image_save_entry.grid(row=7,column=0)
+
+        random_label = Label(frame,text='', bg = '#000000')
+        random_label.grid(row=8,column=0)
+
+        button_enc = Button(frame, textvariable=button_enc_text, command = lambda: Encode(message.get(), og_image.get(), encoded_image.get()), padx='10px', pady='5px', font=('', 20))
+        button_enc.grid(row=9,column=0)
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=10,column=0)
+
+        button_home = Button(frame, textvariable=button_home_text, command = lambda: StartPage(), padx='10px', pady='5px', font=('', 20))
+        button_home.grid(row=11,column=0)
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=12,column=0)
+
+        frame.grid(row=0, column=0)
+
+
+    # Decode Page of Console
+    def DecodePage():
+
+        frame = Frame(console)
+        frame.config(background='#000000', padx= 80, pady=100)
+
+        welcome_label_text = StringVar()
+        image_decode_label_text = StringVar()
+        encoded_image = StringVar()
+        button_dec_text = StringVar()
+        button_home_text = StringVar()
+        welcome_label_text.set("DECODE")
+        image_decode_label_text.set("Enter the Encoded Image File path (with extension)")
+        button_dec_text.set("Decode")
+        button_home_text.set("Back to Home")
+
+        welcome_label = Label(frame, textvariable = welcome_label_text, bg = '#000000', fg = '#FFFFFF', padx='10px', pady='10px', font=('', 25))
+        welcome_label.grid(row=0,column=0)
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=1,column=0)
+
+        image_decode_label = Label(frame, textvariable = image_decode_label_text, bg = '#000000', fg = '#FFFFFF', padx='10px', pady='10px', font=('', 15))
+        image_decode_label.grid(row=2,column=0)
+        image_decode_input = Entry(frame, textvariable = encoded_image, width=60)
+        image_decode_input.grid(row=3,column=0)
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=4,column=0)
+
+        button_dec = Button(frame, textvariable=button_dec_text, command = lambda: Decode(encoded_image.get()), padx='10px', pady='5px', font=('', 20))
+        button_dec.grid(row=5,column=0)
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=6,column=0)
+
+        button_home = Button(frame, textvariable=button_home_text, command = lambda: StartPage(), padx='10px', pady='5px', font=('', 20))
+        button_home.grid(row=7,column=0)
+
+        random_label = Label(frame, text='', bg = '#000000')
+        random_label.grid(row=8,column=0)
+
+        frame.grid(row=0, column=0)
+
+
+    # Function to run the encode function from user input 
+    def Encode(message, og_image, encoded_image):
+
+        root = Tk()
+        root.config(background="#000000", width=300)
+        try:
+            message_chars = convertBinary(message)
+            pixel_list = getPixels(og_image)
+            pixel_list = encode(pixel_list,message_chars)
+            createImage(pixel_list, og_image, encoded_image)
+            Label(root, text="Encoded image saved successfully", bg="#000000", fg="#00FF00", pady=50).pack()
+        except (Exception):
+            Label(root, text="Invalid Image path or Encoded image path", bg="#000000", fg="#FF0000").pack()
+        root.mainloop()
+
+    
+    # Function to run the encode function from user input 
+    def Decode(encoded_image):
+
+        root = Tk()
+        root.config(background="#000000", width=300)
+        try:
+            pixel_list = getPixels(encoded_image)
+            decoded_message = decode(pixel_list)
+            Label(root, text=decoded_message, bg="#000000", fg="#0000FF", pady=50).pack()
+        except:
+            Label(root, text="Invalid Encoded image path", bg="#000000", fg="#FF0000").pack()
+        root.mainloop()
+
+
+
+    # running our Console
+    console = Tk()
+    console.configure(background='#000000')
+    
+    StartPage()
+    
+    console.mainloop()
+
 
 
 
