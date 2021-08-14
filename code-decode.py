@@ -295,15 +295,19 @@ if __name__ == "__main__":
     def Encode(message, og_image, encoded_image):
 
         root = Tk()
-        root.config(background="#000000", width=300)
+        root.config(background="#000000")
         try:
+            root.title("Success")
+            root.iconbitmap(r"D:\Python Projects\Steganography\Images\app_icon.ico")
             message_chars = convertBinary(message)
             pixel_list = getPixels(og_image)
             pixel_list = encode(pixel_list,message_chars)
             createImage(pixel_list, og_image, encoded_image)
-            Label(root, text="Encoded image saved successfully", bg="#000000", fg="#00FF00", pady=50).pack()
-        except (Exception):
-            Label(root, text="Invalid Image path or Encoded image path", bg="#000000", fg="#FF0000").pack()
+            Label(root, text="Encoded image saved successfully", bg="#000000", fg="#00FF00", pady=30, padx=20).pack()
+        except:
+            root.title("Error")
+            root.iconbitmap(r"D:\Python Projects\Steganography\Images\error_icon.ico")
+            Label(root, text="Invalid Image path or Encoded image path", bg="#000000", fg="#FF0000", pady=30, padx=20).pack()
         root.mainloop()
 
     
@@ -313,17 +317,23 @@ if __name__ == "__main__":
         root = Tk()
         root.config(background="#000000", width=300)
         try:
+            root.title("Encoded Message")
+            root.iconbitmap(r"D:\Python Projects\Steganography\Images\app_icon.ico")
             pixel_list = getPixels(encoded_image)
             decoded_message = decode(pixel_list)
-            Label(root, text=decoded_message, bg="#000000", fg="#0000FF", pady=50).pack()
+            Label(root, text=decoded_message, bg="#000000", fg="#0000FF", pady=30, padx=20).pack()
         except:
-            Label(root, text="Invalid Encoded image path", bg="#000000", fg="#FF0000").pack()
+            root.title("Error")
+            root.iconbitmap(r"D:\Python Projects\Steganography\Images\error_icon.ico")
+            Label(root, text="Invalid Encoded image path", bg="#000000", fg="#FF0000", pady=30, padx=20).pack()
         root.mainloop()
 
 
 
     # running our Console
     console = Tk()
+    console.title("CODE-DECODE")
+    console.iconbitmap(r"D:\Python Projects\Steganography\Images\app_icon.ico")
     console.configure(background='#000000')
     
     StartPage()
